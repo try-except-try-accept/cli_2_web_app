@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>cli_2_web_app</title>
+
+    <link rel="stylesheet" href="static/styles.css" type="text/css"/>
+</head>
+
+<script src="static/scripts/cli_scripts.js"> </script>
+
+<body>
+
+
+<textarea name="cli" id="output" readonly>
+    {{ cli_text }}
+</textarea>
+<br>
+<form>
+<input type="text" id="input" onsubmit="send_cli_input();">
+</form>
+
+
+</body>
+
+<script>get_cli_output();</script>
+</html>

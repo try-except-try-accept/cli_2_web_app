@@ -1,0 +1,13 @@
+
+
+textarea
+{
+    height:400px;
+}
+textarea, input
+{
+    width: 50%;
+    background-color: black;
+    color: white;
+
+}
