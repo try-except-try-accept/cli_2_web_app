@@ -42,7 +42,9 @@ function get_cli_output()
 
 function send_cli_input()
 {
-    let input = document.getElementById("input")
+    let input = document.getElementById("input").value;
+    console.log(`sending ${input} to server`);
+
     fetch(`http://127.0.0.1:5000/post_cli`,  {
     method: "POST",
     credentials: "include",

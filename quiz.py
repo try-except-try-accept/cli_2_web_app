@@ -1,12 +1,21 @@
+from __future__ import print_function
+
 from random import randint, randrange
 
+from sys import stdout
+
+
+
 def get_answer():
+    stdout.write("Getting an answer\n")
     ans = ''
     while not len(ans):
         ans = input("What's the answer? ")
     return ans
 
 def generate_question():
+    stdout.write("Generating a question\n")
+
     q = ""
     words = ["".join(chr(randint(97, 97+25)) for i in range(randint(5, 10))) for i in range(randint(5, 10))]
     q = " ".join(words) + "!\n"
@@ -31,6 +40,7 @@ def display_question(i, q):
     print(f"Question {i}: {q}")
 
 def check_answer(guess, correct):
+    stdout.write("Checking the answer\n")
     if guess == correct:
         print("Correct answer!")
         return 1
@@ -39,7 +49,7 @@ def check_answer(guess, correct):
         return -1
 
 def display_points(points):
-    print(f"You have {points} points.")
+    print(f"You have \{points} points.")
 
 
 def main():
@@ -55,6 +65,13 @@ def main():
             display_points(points)
     print("You finished the quiz!")
 
+
+from helpers import Mocker
+
+m = Mocker()
+
+print = m.print_wrapper
+input = m.input_wrapper
 
 if __name__ == "__main__":
     main()
