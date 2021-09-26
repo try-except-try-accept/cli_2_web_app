@@ -12,16 +12,28 @@
 <body>
 
 
-<textarea name="cli" id="output" readonly>
+<textarea name="cli" id="output" readonly autofocus>
     {{ cli_text }}
 </textarea>
 <br>
-<form>
+
 <input type="text" id="input" onsubmit="send_cli_input();">
-</form>
+
 
 
 </body>
 
-<script>get_cli_output();</script>
+<script>get_cli_output();
+
+
+var input = document.getElementById("input");
+input.addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        send_cli_input();
+        input.value = "";
+    }
+});
+
+</script>
 </html>

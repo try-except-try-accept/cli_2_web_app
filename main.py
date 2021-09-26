@@ -7,7 +7,7 @@ from flask import Flask, session, request, after_this_request, jsonify, make_res
 from queue import Queue
 from flask import render_template
 from uuid import uuid4
-from quiz import m, main as run_quiz
+from logical_expressions_quiz import m, main as run_quiz
 import logging
 import threading
 import time
@@ -25,8 +25,7 @@ from helpers import Mocker
 def get_cli():
     print("Fetching")
     sleep(0.5)
-    with open("output.txt", "r") as f:
-         data = f.read()
+    data = m.get_new_lines()
     res = make_response(dump_json({"message":data}), 200)
     print("fetched", data)
 
@@ -36,8 +35,7 @@ def get_cli():
 def post_cli():
     data = request.get_json()
     print("received the data", data)
-    with open("output.txt", "a") as f:
-        f.write(data+"\n")
+    m.add_line(data)
     m.q.put(data)
     return get_cli()
 
@@ -68,10 +66,10 @@ if __name__ == "__main__":
 
     flask_thread = threading.Thread(target=app.run, daemon=True, kwargs=kwargs).start()
 
-    with patch("builtins.print", sideeffect=m.print_wrapper):
-        with patch("builtins.input", sideeffect=m.input_wrapper):
-            x = threading.Thread(target=run_quiz, daemon=True)
-            x.start()
+
+
+    x = threading.Thread(target=run_quiz, daemon=True)
+    x.start()
 
     x.join()
 

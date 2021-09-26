@@ -16,14 +16,28 @@ async function get_cli(url) {
   return response.json(); // parses JSON response into native JavaScript objects
 }
 
-function load_text(text)
+function load_text(new_lines)
 {
-    let output_textarea = document.getElementById("output")
-    output_textarea.value = text;
+
+    console.log(new_lines);
+
+    function expand_textarea()
+    {
+        let output_textarea = document.getElementById("output");
+        let new_line = new_lines.shift();
+        output_textarea.value = output_textarea.value + new_line + "\n";
+        output_textarea.scrollTop = output_textarea.scrollHeight + 10;
+    }
+
+    (function loop() {
+        new_lines.length && (expand_textarea(), setTimeout(loop, 100));
+    })();
+
 }
 
 function get_cli_output()
 {
+ console.log("bottom scroll");
   fetch(`http://127.0.0.1:5000/get_cli`,  {
     method: "GET",
     credentials: "include",
@@ -60,7 +74,7 @@ function send_cli_input()
     })
   })
   .then(response => response.json())
-  .then(response => get_cli_output());
+  .then(response => load_text(response.message));
 
 }
 
